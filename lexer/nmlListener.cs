@@ -41,6 +41,16 @@ public interface InmlListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitJson([NotNull] nmlParser.JsonContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="nmlParser.rootobj"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterRootobj([NotNull] nmlParser.RootobjContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="nmlParser.rootobj"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitRootobj([NotNull] nmlParser.RootobjContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="nmlParser.obj"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

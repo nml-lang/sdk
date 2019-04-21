@@ -47,6 +47,18 @@ public partial class nmlBaseListener : InmlListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitJson([NotNull] nmlParser.JsonContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="nmlParser.rootobj"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterRootobj([NotNull] nmlParser.RootobjContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="nmlParser.rootobj"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitRootobj([NotNull] nmlParser.RootobjContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="nmlParser.obj"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

@@ -1,21 +1,25 @@
 grammar nml;
 
-json: value;
+json: rootobj value;
+
+rootobj: 'root' obj;
 
 obj: '{' pair (',' pair)* '}' | '{' '}';
 
-pair: STRING ':' value;
+pair: KEY value;
 
 array: '[' value (',' value)* ']' | '[' ']';
 
-value:
-	STRING
-	| NUMBER
-	| obj
-	| array
-	| 'true'
-	| 'false'
-	| 'null';
+value: STRING
+	 | NUMBER
+	 | obj
+	 | array
+	 | 'true'
+	 | 'false'
+	 | 'null';
+
+
+KEY: (ESC | SAFECODEPOINT)* ' ';
 
 STRING: '"' (ESC | SAFECODEPOINT)* '"';
 

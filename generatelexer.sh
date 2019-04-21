@@ -1,1 +1,1 @@
-antlr4 -Dlanguage=CSharp -o lexer/ nml.g4
+antlr4 -Dlanguage=CSharp -visitor -o lexer/ nml.g4
