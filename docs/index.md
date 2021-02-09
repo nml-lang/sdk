@@ -32,19 +32,19 @@ Going deeper in the base element you have a few more things.
 
 ```lang-default
 // Headers statements
-declare jlml "jlml.github.io/pack";
-declare images "jlml.github.io/images";
+declare NML "https://nml-lang.github.io/sdk/samples/pack.nml";
+declare images "https://nml-lang.github.io/sdk/samples/img/";
 
 // Document base element
 {
     tags: "container";
 
     // Value with an using option
-    nav: using jlml.nav;
+    nav: using nav from NML;
 
     image: if page.width < 900
     {
-        src: (images, "placeholder-600x400");
+        source: { src: $(images, "img_car.jpg"); }
         description: {
             text: "Only shown when screen is smaller then 900 pixels"
         }
