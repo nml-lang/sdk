@@ -1,0 +1,1 @@
+java -jar antlr-4.9-complete.jar -Dlanguage=CSharp -package NML.Parser.Generated -no-listener -visitor NML.g4 -o generated/
