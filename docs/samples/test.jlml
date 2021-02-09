@@ -1,14 +1,14 @@
-set page.title "NML test page";
+set page.title "jlml test page";
 set page.style "";
 
 declare comp "https://nml-lang.github.io/sdk/samples/components/";
 
-declare NML "https://nml-lang.github.io/sdk/samples/pack.nml";
-declare NMLloose "https://nml-lang.github.io/sdk/samples/loose/";
+declare jlml "https://nml-lang.github.io/sdk/samples/pack.jlml";
+declare jlmlloose "https://nml-lang.github.io/sdk/samples/loose/";
 
 {
-	nav: using nav from NML;
-	nav: using nav from NMLloose;
+	nav: using nav from jlml;
+	nav: using nav from jlmlloose;
 	tags: "container";
 
 	image: {
@@ -26,7 +26,7 @@ declare NMLloose "https://nml-lang.github.io/sdk/samples/loose/";
 		}
 	}
 
-	form#form-container: {
+	form: {
 //		tags: when page.width > 900 then "container" else "container-fluid";
 
 		input:
@@ -57,10 +57,10 @@ declare NMLloose "https://nml-lang.github.io/sdk/samples/loose/";
 			}
 
 			option: for value in values {
-				tags: @("option", value);
 				value: value;
 			}
-//			option: for value in othervalues when value == $("show ", value) {
+//			option: for value in othervalues
+//				when value == $("show ", value) {
 //				value: value;
 //			}
 		}

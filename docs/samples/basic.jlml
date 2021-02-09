@@ -1,0 +1,19 @@
+// Headers statements
+declare jlml "https://nml-lang.github.io/sdk/samples/pack.jlml";
+declare images "https://via.placeholder.com/";
+
+// Document base element
+{
+    tags: "container";
+
+    // Value with an using option
+    nav: using nav from page.jlml;
+
+    image:
+    {
+        src: $(images, "600x400");
+        description: {
+            text: "Only shown when screen is smaller then 900 pixels"
+        }
+    }
+}

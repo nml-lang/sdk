@@ -1,32 +1,32 @@
 set page.title "NML test page";
 set page.style "";
 
-declare comp "https://mr9madness.github.io/JLML/samples/components/";
+declare comp "https://nml-lang.github.io/sdk/samples/components/";
 
-declare NML "https://mr9madness.github.io/JLML/samples/pack.jlml";
-declare NMLloose "https://mr9madness.github.io/JLML/samples/loose/";
+declare NML "https://nml-lang.github.io/sdk/samples/pack.nml";
+declare NMLloose "https://nml-lang.github.io/sdk/samples/loose/";
 
 {
 	nav: using nav from NML;
-//	nav: using nav from NMLloose;
+	nav: using nav from NMLloose;
 	tags: "container";
 
 	image: {
 		source: {
-			src: "https://mr9madness.github.io/NML/samples/img/img_food.jpg";
+			src: "https://nml-lang.github.io/sdk/samples/img/img_food.jpg";
 		}
 		source: when page.width < 600 {
-			src: "https://mr9madness.github.io/NML/samples/img/img_girl.jpg";
+			src: "https://nml-lang.github.io/sdk/samples/img/img_girl.jpg";
 		}
 		source: when page.width < 1000 {
-			src: "https://mr9madness.github.io/NML/samples/img/img_car.jpg";
+			src: "https://nml-lang.github.io/sdk/samples/img/img_car.jpg";
 		}
 		description: {
 			text: "Shows a car when on a screen thats under 1000 pixels, a girl when its under 600, and otherwise food";
 		}
 	}
 
-	form: {
+	form#form-container: {
 //		tags: when page.width > 900 then "container" else "container-fluid";
 
 		input:
@@ -57,10 +57,10 @@ declare NMLloose "https://mr9madness.github.io/JLML/samples/loose/";
 			}
 
 			option: for value in values {
+				tags: @("option", value);
 				value: value;
 			}
-//			option: for value in othervalues
-//				when value == $("show ", value) {
+//			option: for value in othervalues when value == $("show ", value) {
 //				value: value;
 //			}
 		}

@@ -1,37 +1,58 @@
-## Welcome to GitHub Pages
+# JLML
 
-You can use the [editor on GitHub](https://github.com/nml-lang/sdk/edit/main/docs/index.md) to maintain and preview the content for your website in Markdown files.
+JLML (json like markup language) is a markup language concept in a json like format
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Document breakdown
 
-### Markdown
+### Top level
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+A jlml document is at the top level comprised of two or more things:
 
-```markdown
-Syntax highlighted code block
+- [Headers](https://nml-lang.github.io/sdk/api/headers.md).
+These are either a `declare` or `set` statement
+  - [Declare](). `declare jlml "jlml.github.io/pack/";`
+  - [Set](). `set page.title "JLML Page";`
+- [Base Element/Elements](https://nml-lang.github.io/sdk/api/elements.md). Every document has to have at least one but can have more. This can optionally be an named element
+  - [Elements](https://nml-lang.github.io/sdk/api/elements.md).
+  `{ ... }`
+  - [Named element](https://nml-lang.github.io/sdk/api/named_elements.md).
+  `nav: { ... }`
 
-# Header 1
-## Header 2
-### Header 3
+### Lower levers
 
-- Bulleted
-- List
+Going deeper in the base element you have a few more things.
 
-1. Numbered
-2. List
+- [Values](https://nml-lang.github.io/sdk/api/values.md). An element can have a number of values
+  - `tags: "container";`
+- [Options](https://nml-lang.github.io/sdk/api/options.md). These can be used to import other code or give conditions to elements
+  - [Import options](https://nml-lang.github.io/sdk/api/import_options.md). `using jlml.nav;`
+  - [Conditional options](https://nml-lang.github.io/sdk/api/conditional_options.md). `if page.width < 900`
 
-**Bold** and _Italic_ and `Code` text
+## Complete sample
 
-[Link](url) and ![Image](src)
+```lang-default
+// Headers statements
+declare jlml "jlml.github.io/pack";
+declare images "jlml.github.io/images";
+
+// Document base element
+{
+    tags: "container";
+
+    // Value with an using option
+    nav: using jlml.nav;
+
+    image: if page.width < 900
+    {
+        src: (images, "placeholder-600x400");
+        description: {
+            text: "Only shown when screen is smaller then 900 pixels"
+        }
+    }
+
+    {
+        text: "this always has 1/3 of the width of the page wide";
+        width: page.width / 3;
+    }
+}
 ```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/nml-lang/sdk/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.

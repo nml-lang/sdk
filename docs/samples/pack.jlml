@@ -1,0 +1,47 @@
+nav: {
+	tags: "navbar";
+	role: "navigation";
+	aria-label: "main navigation";
+	div: {
+		tags: "navbar-brand";
+		link: {
+			tags: "navbar-item";
+			href: "https://bulma.io";
+			img: {
+				src: "https://bulma.io/images/bulma-logo.png";
+				width: 112;
+				height: 28;
+			}
+		}
+		link: {
+			role: "button";
+			tags: "navbar-burger";
+			aria-label: "menu";
+			aria-expanded: "false";
+			data-target: "navbarBasicExample";
+			span: { aria-hidden: "true"; }
+			span: { aria-hidden: "true"; }
+			span: { aria-hidden: "true"; }
+		}
+	}
+	div: {
+		id: "navbarBasicExample";
+		tags: "navbar-menu";
+		div: {
+			tags: "navbar-start";
+			link: { tags: "navbar-item"; text: "Home"; }
+			link: { tags: "navbar-item"; text: "Documentation"; }
+		}
+		div: {
+			tags: "navbar-end";
+			div: {
+				tags: "navbar-item";
+				link: {
+					tags: "button is-primary";
+					strong: { text: "Sign up"; }
+				}
+				link: { tags: "button is-light"; text: "Log in"; }
+			}
+		}
+	}
+}

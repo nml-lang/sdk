@@ -27,7 +27,7 @@ namespace NMLAspSample.Controllers
 			using HttpClient http = new();
 			try
 			{
-				var text = await http.GetStringAsync("https://mr9madness.github.io/NML/samples/" + sample);
+				var text = await http.GetStringAsync("https://nml-lang.github.io/sdk/samples/" + sample);
 				return Content(text, "text/plain");
 			}
 			catch(Exception)
@@ -42,7 +42,7 @@ namespace NMLAspSample.Controllers
 			using HttpClient http = new();
 			try
 			{
-				var text = await http.GetStringAsync("https://mr9madness.github.io/NML/samples/" + sample);
+				var text = await http.GetStringAsync("https://nml-lang.github.io/sdk/samples/" + sample);
 				var document = NMLDocumentLoader.Load(text);
 
 				return Content(_scripter.ToScript(document), "text/html");
@@ -59,7 +59,7 @@ namespace NMLAspSample.Controllers
 			using HttpClient http = new();
 			try
 			{
-				var text = await http.GetStringAsync("https://mr9madness.github.io/NML/samples/" + sample);
+				var text = await http.GetStringAsync("https://nml-lang.github.io/sdk/samples/" + sample);
 				var document = NMLDocumentLoader.Load(text);
 
 				NML.Transpiler.Generator.HtmlGenerator.SetFormatting(true);
