@@ -29,15 +29,16 @@ namespace NML.Transpiler.Visitors
 
 		public IElement? Visit(ImportOptions options)
 		{
+			if(options == null) throw new ArgumentNullException(nameof(options), "Provided import options are empty");
+			if(pageContext == null) throw new ArgumentNullException(nameof(pageContext), "Provided page context is empty");
+
 			string importText = "";
-			var path = pageContext[options.IsFromSpecified
-				? options.FromDestination : options.ElementName
-			].ToString();
+			var path = pageContext[options.IsFromSpecified ? options.FromDestination : options.ElementName]?.ToString();
 			if(string.IsNullOrWhiteSpace(path))
 			{
-				throw new System.ArgumentNullException(
+				throw new ArgumentNullException(
 					nameof(options),
-					$"Cannot find value ({(options.IsFromSpecified ? options.FromDestination : options.ElementName)}) in page context"
+					$"Cannot find value ({(options.IsFromSpecified ? options.FromDestination : options.ElementName)}) in page headers"
 				);
 			}
 

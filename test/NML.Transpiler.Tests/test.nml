@@ -57,7 +57,7 @@ declare NMLloose "https://nml-lang.github.io/sdk/samples/loose/";
 			}
 
 			option: for value in values {
-				tags: @("option", value);
+				tags: $("option ", value);
 				value: value;
 			}
 //			option: for value in othervalues when value == $("show ", value) {

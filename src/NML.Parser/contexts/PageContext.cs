@@ -35,18 +35,15 @@ namespace NML.Parser.Contexts
 				// All page properties have to be lower case to avoid null returns
 				string lowerName = name.ToLower();
 
-				if(!props.ContainsKey(lowerName)) return null;
-				return props.GetValueOrDefault(lowerName);
+				if(!props.TryGetValue(lowerName, out object? value)) return null;
+				return value;
 			}
 			set {
 				// All page properties have to be lower case to avoid null returns
 				string lowerName = name.ToLower();
 
-				if (!props.ContainsKey(lowerName)) return;
-				var val = props.GetValueOrDefault(lowerName);
-
 				if(value == null) return;
-				props[lowerName] = value.ToString();
+				props[lowerName] = value;
 			}
 		}
 
@@ -56,10 +53,8 @@ namespace NML.Parser.Contexts
 		/// <param name="objects"></param>
 		public void AddRange(Dictionary<string, string> pairs)
 		{
-			foreach (var item in pairs)
-			{
-				props.Add(item.Key, item.Value);
-			}
+			foreach(var item in pairs) 
+				props.Add(item.Key.ToLower(), item.Value);
 		}
 	}
 }
