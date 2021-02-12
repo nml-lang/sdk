@@ -13,7 +13,7 @@ namespace NML.Parser.Objects.Elements
 		{
 			Attributes = new List<IValue>();
 			Children = new List<IElement>();
-			Current = null;
+			Context = null;
 		}
 
 		public string Name { get; init; }
@@ -21,7 +21,7 @@ namespace NML.Parser.Objects.Elements
 
 		public ICollection<IValue> Attributes { get; init; }
 		public ICollection<IElement> Children { get; init; }
-		public ElementContext Current { get; set; }
+		public ElementContext Context { get; set; }
 
 #nullable enable
 
@@ -66,7 +66,7 @@ namespace NML.Parser.Objects.Elements
 				ConditionalOptions = ConditionalOptions,
 				ImportOptions = ImportOptions,
 				LoopOptions = LoopOptions,
-				Current = new ElementContext(Current),
+				Context = new ElementContext(Context),
 			};
 
 			foreach (var item in element.Attributes)

@@ -159,13 +159,13 @@ namespace NML.Transpiler.Visitors
 
 				if (element.LoopOptions is not null)
 				{
-					var listValue = element.Current[element.LoopOptions.ListRef];
+					var listValue = element.Context[element.LoopOptions.ListRef];
 					if(listValue is not null && listValue is IEnumerable<object> list)
 					{
 						foreach (var item in list)
 						{
 							if(element.Clone() is not IElement loopElement) continue;
-							loopElement.Current[element.LoopOptions.ValueRef] = new DataValue {
+							loopElement.Context[element.LoopOptions.ValueRef] = new DataValue {
 								Attribute = element.LoopOptions.ValueRef,
 								DataType = item.GetType(),
 								Value = item,

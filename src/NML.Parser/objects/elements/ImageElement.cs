@@ -13,7 +13,7 @@ namespace NML.Parser.Objects.Elements
 		{
 			Attributes = new List<IValue>();
 			Children = new List<IElement>();
-			Current = null;
+			Context = null;
 			Identifier = "image";
 		}
 

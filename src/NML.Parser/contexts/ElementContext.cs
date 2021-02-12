@@ -25,7 +25,7 @@ namespace NML.Parser.Contexts
 		public ElementContext(IElement element, IElement? parent = null)
 		{
 			Attr = element.Attributes.ToDictionary(k => k.Attribute);
-			Parent = parent?.Current;
+			Parent = parent?.Context;
 		}
 
 		/// <summary>
@@ -49,6 +49,7 @@ namespace NML.Parser.Contexts
 		{
 			get
 			{
+				if(string.IsNullOrEmpty(name)) return null;
 				ElementContext context = this;
 
 				if(name.Contains("."))

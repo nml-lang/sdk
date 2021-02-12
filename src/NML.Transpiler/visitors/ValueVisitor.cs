@@ -51,7 +51,7 @@ namespace NML.Transpiler.Visitors
 				var listValue = value.Values[i];
 				if(listValue == null) continue;
 				string id = listValue.ToString();
-				if(TryGetValue(value.Element.Current, id, out object val))
+				if(TryGetValue(value.Element.Context, id, out object val))
 					builder[i] = val.ToString();
 				else
 					builder[i] = id;
@@ -65,7 +65,7 @@ namespace NML.Transpiler.Visitors
 		private object GetValue(DataValue value)
 		{
 			string valueId = value.Value.ToString();
-			return pageContext[valueId] ?? value.Element.Current[valueId];
+			return pageContext[valueId] ?? value.Element.Context[valueId];
 		}
 		private bool TryGetValue(ElementContext current, string id, out object value)
 		{

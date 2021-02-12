@@ -11,12 +11,12 @@ namespace NML.Parser.Objects.Elements
 		{
 			Attributes = new List<IValue>();
 			Children = new List<IElement>();
-			Current = null;
+			Context = null;
 		}
 
 		public ICollection<IValue> Attributes { get; init; }
 		public ICollection<IElement> Children { get; init; }
-		public ElementContext Current { get; set; }
+		public ElementContext Context { get; set; }
 
 		public string Accept(IElementVisitor<string> visitor)
 		{
@@ -29,7 +29,7 @@ namespace NML.Parser.Objects.Elements
 			{
 				Attributes = new List<IValue>(Attributes),
 				Children = new List<IElement>(Children),
-				Current = new ElementContext(Current),
+				Context = new ElementContext(Context),
 			};
 		}
 	}

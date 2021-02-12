@@ -9,7 +9,7 @@ namespace NML.Parser.Objects.Elements
 {
 	public interface IElement : ICloneable
 	{
-		public ElementContext Current { get; set; }
+		public ElementContext Context { get; set; }
 
 		public ICollection<IValue> Attributes { get; init; }
 		public ICollection<IElement> Children { get; init; }

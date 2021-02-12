@@ -24,8 +24,8 @@ namespace NML.Parser
 			parser.AddErrorListener(new NMLErrorListener());
 
 			try {
-				ElementVisitor visitor = new();
-				return (NMLDocument)parser.nml().Accept(visitor);
+				DocumentVisitor visitor = new();
+				return parser.nml().Accept(visitor);
 			}
 			catch(RecognitionException rex)
 			{

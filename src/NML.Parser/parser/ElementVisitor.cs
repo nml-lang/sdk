@@ -11,45 +11,60 @@ using NML.Parser.Objects.Values;
 
 namespace NML.Parser.Parsers
 {
+	public class DocumentVisitor : Generated.NMLBaseVisitor<NMLDocument>
+	{
+		private readonly ElementVisitor elementVisitor = new();
+		private readonly ValueVisitor valueVisitor = new();
+
+		public override NMLDocument VisitNml([NotNull] NMLParser.NmlContext context)
+		{
+			NMLDocument document;
+
+			var headerContext = context.headers();
+			if (headerContext != null)
+				document = headerContext.Accept(this);
+			else
+				document = new NMLDocument();
+
+			var elementContexts = context.element();
+			for (int i = 0; i < elementContexts.Length; i++)
+			{
+				var child = elementContexts[i].Accept(elementVisitor);
+				document.Children.Add(child);
+			}
+
+			return document;
+		}
+
+		public override NMLDocument VisitHeaders([NotNull] NMLParser.HeadersContext context)
+		{
+			var declareHeaders = context.assignheader();
+			var setHeaders = context.setheader();
+
+			NMLDocument baseScript = new();
+
+			for (int i = 0; i < declareHeaders.Length; i++)
+			{
+				if (declareHeaders[i].Accept(valueVisitor) is HeaderValue value)
+					baseScript.Attributes.Add(value);
+			}
+
+			for (int i = 0; i < setHeaders.Length; i++)
+			{
+				if(setHeaders[i].Accept(valueVisitor) is HeaderValue value)
+					baseScript.Attributes.Add(value);
+			}
+
+			return baseScript;
+		}
+	}
+
 	public class ElementVisitor : Generated.NMLBaseVisitor<IElement>
 	{
 		private readonly ValueVisitor valueVisitor = new();
 		private readonly OptionVisitor optionVisitor = new();
 
-		private IElement currentElement = null;
-
-		public override NMLDocument VisitNml([NotNull] NMLParser.NmlContext context)
-		{
-			NMLDocument baseScript = new();
-			currentElement = baseScript;
-
-			var headerContext = context.headers();
-			if(headerContext != null)
-				_ = headerContext.Accept(this);
-
-			var elementContexts = context.element();
-			for (int i = 0; i < elementContexts.Length; i++)
-			{
-				var child = elementContexts[i].Accept(this);
-				baseScript.Children.Add(child);
-			}
-
-			return baseScript;
-		}
-
-		public override IElement VisitHeaders([NotNull] NMLParser.HeadersContext context)
-		{
-			var declareHeaders = context.assignheader();
-			var setHeaders = context.setheader();
-
-			for (int i = 0; i < declareHeaders.Length; i++)
-				currentElement.Attributes.Add(declareHeaders[i].Accept(valueVisitor));
-
-			for (int i = 0; i < setHeaders.Length; i++)
-				currentElement.Attributes.Add(setHeaders[i].Accept(valueVisitor));
-
-			return currentElement;
-		}
+		private IElement? currentElement = null;
 
 		public override IElement VisitElement([NotNull] NMLParser.ElementContext context)
 		{
@@ -63,7 +78,7 @@ namespace NML.Parser.Parsers
 				element.Attributes.Add(value);
 			}
 
-			element.Current = new ElementContext(element, currentElement);
+			element.Context = new ElementContext(element, currentElement);
 
 			currentElement = element;
 			NMLParser.ElementContext[] elementContext = context.element();

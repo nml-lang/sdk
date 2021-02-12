@@ -8,7 +8,7 @@ namespace NML.Parser.Objects.Elements
 	public static class ElementExtensions
 	{
 		/// <summary>
-		/// Get first child in element
+		/// Get first child in element and children
 		/// </summary>
 		/// <returns>The first found element or null when none are found</returns>
 		public static IElement? FirstOrDefault(this IElement element)
@@ -43,6 +43,60 @@ namespace NML.Parser.Objects.Elements
 				else if(Identifier is not null)
 					if(el.Identifier == Identifier)
 						return el;
+			}
+
+			// FIXME: Breadth first search implementation is not good
+			foreach (var item in element.Children)
+			{
+				if (item is not NamedElement el) continue;
+
+				if (el.Children.Any())
+				{
+					var childEl = el.FirstOrDefault(name, Identifier);
+					if (childEl != default(NamedElement)) return childEl;
+				}
+			}
+
+			return default;
+		}
+
+		/// <summary>
+		/// Get first child of document
+		/// </summary>
+		/// <returns>The first found element or null when none are found</returns>
+		public static IElement? FirstOrDefault(this NMLDocument element)
+		{
+			foreach (var item in element.Children)
+			{
+				return item;
+			}
+
+			return default(NamedElement);
+		}
+
+		/// <summary>
+		/// Breadth first search though the element tree starting at the given element
+		/// Breadth first search is used because the tree can be very deep
+		/// </summary>
+		/// <returns>The first found element or null when none are found</returns>
+		public static NamedElement? FirstOrDefault(this NMLDocument element, string? name = null, string? Identifier = null)
+		{
+			foreach (var item in element.Children)
+			{
+				if (item is not NamedElement el) continue;
+
+				if (name is not null)
+				{
+					if (Identifier is not null)
+						if (el.Name == name && el.Identifier == el.Identifier)
+							return el;
+						else
+						if (el.Name == name)
+							return el;
+						else if (Identifier is not null)
+							if (el.Identifier == Identifier)
+								return el;
+				}
 			}
 
 			// FIXME: Breadth first search implementation is not good

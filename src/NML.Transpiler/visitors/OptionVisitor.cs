@@ -108,7 +108,7 @@ namespace NML.Transpiler.Visitors
 			var scriptOptions = ScriptOptions.Default.AddReferences(typeof(PageContext).Assembly).AddImports("System", "NML.Parser.Contexts");
 			var condition = CSharpScript.EvaluateAsync<Func<PageContext, ElementContext, bool>>(conditionString, scriptOptions).GetAwaiter().GetResult();
 
-			if(condition(pageContext, options.Element.Current))
+			if(condition(pageContext, options.Element.Context))
 				return options.Element;
 			return null;
 		}
