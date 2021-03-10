@@ -30,8 +30,7 @@ namespace NML.Transpiler
 		/// <returns>An html string that represents the given document</returns>
 		public string ToScript(NMLDocument value, IGenerator generator)
 		{
-			PageContext context = new();
-			ElementVisitor visitor = new(context, generator);
+			ElementVisitor visitor = new(generator);
 			return value.Accept(visitor);
 		}
 	}

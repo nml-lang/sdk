@@ -49,13 +49,10 @@ declare NMLloose "https://nml-lang.github.io/sdk/samples/loose/";
 			}
 		}
 		select: {
-			values: ("first option", "second option", "show secret option 1", "show secret option 2");
-//			othervalues: ("secret option 1", "secret option 2");
+			set values: ("first option", "second option", "show secret option 1", "show secret option 2");
+			set othervalues: ("secret option 1", "secret option 2");
 
-			option: {
-				value: "top action";
-			}
-
+			option: { value: "top action"; }
 			option: for value in values {
 				tags: @("option", value);
 				value: value;

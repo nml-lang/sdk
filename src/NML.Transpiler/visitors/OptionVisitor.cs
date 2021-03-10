@@ -20,20 +20,19 @@ namespace NML.Transpiler.Visitors
 	public class OptionVisitor : IOptionVisitor<IElement>
 	{
 		private readonly ValueVisitor valueVisitor;
-		private readonly PageContext pageContext;
-		public OptionVisitor(PageContext pageContext, ValueVisitor valueVisitor)
+
+		public OptionVisitor(ValueVisitor valueVisitor)
 		{
-			this.pageContext = pageContext;
 			this.valueVisitor = valueVisitor;
 		}
 
 		public IElement? Visit(ImportOptions options)
 		{
 			if(options == null) throw new ArgumentNullException(nameof(options), "Provided import options are empty");
-			if(pageContext == null) throw new ArgumentNullException(nameof(pageContext), "Provided page context is empty");
+			if(ElementVisitor.BaseScript.Context == null) throw new ArgumentNullException(nameof(ElementVisitor.BaseScript.Context), "Provided page context is empty");
 
 			string importText = "";
-			var path = pageContext[options.IsFromSpecified ? options.FromDestination : options.ElementName]?.ToString();
+			var path = ElementVisitor.BaseScript.Context[options.IsFromSpecified ? options.FromDestination : options.ElementName]?.ToString();
 			if(string.IsNullOrWhiteSpace(path))
 			{
 				throw new ArgumentNullException(
@@ -108,7 +107,7 @@ namespace NML.Transpiler.Visitors
 			var scriptOptions = ScriptOptions.Default.AddReferences(typeof(PageContext).Assembly).AddImports("System", "NML.Parser.Contexts");
 			var condition = CSharpScript.EvaluateAsync<Func<PageContext, ElementContext, bool>>(conditionString, scriptOptions).GetAwaiter().GetResult();
 
-			if(condition(pageContext, options.Element.Context))
+			if(condition(ElementVisitor.BaseScript.Context, options.Element.Context))
 				return options.Element;
 			return null;
 		}

@@ -6,17 +6,17 @@ grammar NML;
 nml			: headers? element+;
 
 headers		: (setheader | assignheader)+;
-setheader	: SET PROPERTY_NAME STRING SEMICOLON?;
+setheader	: SET PROPERTY_NAME value SEMICOLON?;
 assignheader: DECLARE IDENTIFIER STRING SEMICOLON?;
 
-element		: elementkey SEMICOLON | elementkey? OPEN_BRACE (pair | element)* CLOSE_BRACE;
+element		: elementkey SEMICOLON | elementkey? OPEN_BRACE (pair | element | setheader)* CLOSE_BRACE;
 elementkey	: IDENTIFIER ('#' IDENTIFIER)? COLON with? loop? when?;
 
 with		: USING IDENTIFIER (FROM IDENTIFIER)?;
 loop		: FOR IDENTIFIER IN (PROPERTY_NAME | IDENTIFIER);
 when		: WHEN PROPERTY_NAME COMPARE_TOKENS (STRING | NUMBER | LITERAL | concat);
 
-pair		: key COLON value SEMICOLON?;
+pair		: key COLON? value SEMICOLON?;
 key			: IDENTIFIER;
 value		: STRING
 			| PROPERTY_NAME

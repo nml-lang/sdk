@@ -19,30 +19,26 @@ namespace NML.Transpiler.Visitors
 		private readonly ValueVisitor valueVisitor;
 		private readonly OptionVisitor optionVisitor;
 
-		private readonly PageContext pageContext;
 		private readonly IGenerator generator;
 
 		public static NMLDocument BaseScript { get; private set; }
 
-		public ElementVisitor(PageContext pageContext, IGenerator generator)
+		public ElementVisitor(IGenerator generator)
 		{
-			this.pageContext = pageContext;
 			this.generator = generator;
 
-			valueVisitor = new ValueVisitor(pageContext, generator);
-			optionVisitor = new OptionVisitor(pageContext, valueVisitor);
+			valueVisitor = new ValueVisitor(generator);
+			optionVisitor = new OptionVisitor(valueVisitor);
 		}
 
 		public string Visit(NMLDocument value)
 		{
 			BaseScript = value;
 
-			pageContext.AddRange(value.Attributes.Cast<HeaderValue>().ToDictionary(o => o.Attribute, e => e.Value));
-
 			// Get values that could only be attributes in html
 			IEnumerable<string> objList = ResolveChildElementsOptions(value.Children).Select(o => o.Accept(this));
 
-			return generator.CreateBaseElement(pageContext, objList);
+			return generator.CreateBaseElement(value.Context, objList);
 		}
 
 		public string Visit(Element value)

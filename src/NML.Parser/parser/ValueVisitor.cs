@@ -81,12 +81,12 @@ namespace NML.Parser.Parsers
 		public override HeaderValue VisitSetheader([NotNull] NMLParser.SetheaderContext context)
 		{
 			var attrName = context.PROPERTY_NAME();
-			var value = context.STRING();
+			var value = context.value().Accept(this);
 			return new HeaderValue
 			{
 				Type = HeaderValue.HeaderType.Set,
 				Attribute = attrName.GetTextValue(),
-				Value = value.GetTextValue(),
+				Value = value,
 			};
 		}
 

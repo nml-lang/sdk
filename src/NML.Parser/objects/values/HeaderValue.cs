@@ -11,7 +11,7 @@ namespace NML.Parser.Objects.Values
 
 		public IElement Element { get; set; }
 
-		public string Value { get; set; }
+		public object Value { get; set; }
 
 		public string Accept(IValueVisitor<string> visitor)
 		{

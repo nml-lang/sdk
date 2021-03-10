@@ -13,12 +13,10 @@ namespace NML.Transpiler.Visitors
 	/// </summary>
 	public class ValueVisitor : IValueVisitor<string>
 	{
-		private readonly PageContext pageContext;
 		private readonly IGenerator generator;
 
-		public ValueVisitor(PageContext pageContext, IGenerator generator)
+		public ValueVisitor(IGenerator generator)
 		{
-			this.pageContext = pageContext;
 			this.generator = generator;
 		}
 
@@ -45,14 +43,14 @@ namespace NML.Transpiler.Visitors
 
 		public string Visit(ConcatValue value)
 		{
-			string[] builder = new string[value.Values.Count];
+			string?[] builder = new string[value.Values.Count];
 			for (int i = 0; i < value.Values.Count; i++)
 			{
-				var listValue = value.Values[i];
-				if(listValue == null) continue;
+				object? listValue = value.Values[i];
+				if(listValue is null) continue;
 				string id = listValue.ToString();
-				if(TryGetValue(value.Element.Context, id, out object val))
-					builder[i] = val.ToString();
+				if(TryGetValue(value.Element.Context, id, out object? val))
+					builder[i] = val?.ToString();
 				else
 					builder[i] = id;
 			}
@@ -62,14 +60,18 @@ namespace NML.Transpiler.Visitors
 			return generator.CreateAttribute(value.Attribute, string.Join(" ", builder));
 		}
 
-		private object GetValue(DataValue value)
+		private object? GetValue(DataValue value)
 		{
+			if(value == null) throw new System.ArgumentNullException(nameof(value), "Provided data value is null");
 			string valueId = value.Value.ToString();
-			return pageContext[valueId] ?? value.Element.Context[valueId];
+			return ElementVisitor.BaseScript.Context[valueId] ?? value.Element.Context[valueId];
 		}
-		private bool TryGetValue(ElementContext current, string id, out object value)
+		private bool TryGetValue(ElementContext current, string id, out object? value)
 		{
-			value = pageContext[id] ?? current[id];
+			value = null;
+			if(string.IsNullOrEmpty(id)) return false;
+
+			value = ElementVisitor.BaseScript.Context[id] ?? current[id];
 			return value != null;
 		}
 	}

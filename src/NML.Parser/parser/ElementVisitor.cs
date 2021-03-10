@@ -46,13 +46,13 @@ namespace NML.Parser.Parsers
 			for (int i = 0; i < declareHeaders.Length; i++)
 			{
 				if (declareHeaders[i].Accept(valueVisitor) is HeaderValue value)
-					baseScript.Attributes.Add(value);
+					baseScript.Declarations.Add(value);
 			}
 
 			for (int i = 0; i < setHeaders.Length; i++)
 			{
 				if(setHeaders[i].Accept(valueVisitor) is HeaderValue value)
-					baseScript.Attributes.Add(value);
+					baseScript.Variables.Add(value);
 			}
 
 			return baseScript;
@@ -84,6 +84,14 @@ namespace NML.Parser.Parsers
 			NMLParser.ElementContext[] elementContext = context.element();
 			for (int i = 0; i < elementContext.Length; i++)
 				element.Children.Add(elementContext[i].Accept(this));
+
+			var setContext = context.setheader();
+			for (int i = 0; i < setContext.Length; i++)
+			{
+				var setValue = setContext[i].Accept(this) as HeaderValue;
+				element.Context.Attr.Add(setValue.Attribute, setValue);
+			}
+
 
 			return element;
 		}
